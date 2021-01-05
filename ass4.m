@@ -61,8 +61,9 @@ function ass4 ()
   # --------- Enforcing the internal constraint ----------------
   [u,s,v] = svd(f);
   s(3,3) = 0;
-  f = u * s * v
-  d = det(f)
+  # f = u * s * v
+  f2 = u * s * v
+  d = det(f2)
   
   #------ geometric_error ----------
   geometric_error = geom_dist(f, first_x, first_y, second_x, second_y)
@@ -76,12 +77,8 @@ function ass4 ()
     corr_point = [second_x(point_number), second_y(point_number), 1];
     epipolar_line = f * transpose(point);
     epipolar_line_T =  transpose(f) * transpose(corr_point) ;
-    hold on;
-    hline(epipolar_line);
-    hold off;
-    hold on;  
-    hline(epipolar_line_T);
-    hold off;  
+    hline(epipolar_line); 
+    #hline(epipolar_line_T); 
   end
   
   b = imread("image_2.jpg");
@@ -91,12 +88,8 @@ function ass4 ()
     corr_point = [second_x(point_number), second_y(point_number), 1];
     epipolar_line = f * transpose(point);
     epipolar_line_T =  transpose(f) * transpose(corr_point);
-    hold on;
     hline(epipolar_line);  
-    hold off;
-    hold on;
-    hline(epipolar_line_T);  
-    hold off;
+    #hline(epipolar_line_T);  
   end
   
 endfunction
