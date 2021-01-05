@@ -1,33 +1,21 @@
 function ass4 ()
-##  a = imread("image_1.jpg");
-##  b = imread("image_2.jpg");
-##  imshow(a);
-##  [first_x, first_y] = ginput(8);
-##  imshow(b);
-##  [second_x, second_y] = ginput(8);
-##
-##  first_x = first_x'
-##  first_y = first_y'
-##  second_x = second_x'
-##  second_y = second_y'
+  a = imread("image_1.jpg");
+  b = imread("image_2.jpg");
+  imshow(a);
+  first = get_points;
+  imshow(b);
+  second = get_points;
 
-% Example call of the HLINE-function
-% ----------------------------------
-% function test
-% %        ====
-% l = [-1 1 50]';                          % Line equation in implicit form
-%  a = imread("image_1.jpg");
-%  b = imread("image_2.jpg");
-% figure, imshow(a), hold on                     % Show image in new window
-% hline(l);                                    % Draw red line l in image f
-% figure, imshow(b), hold on                     % Show image in new window
-% hline(l);                                    % Draw red line l in image f
+  first_x = first(1, :);
+  first_y = first(2, :);
+  second_x = second(1, :);
+  second_y = second(2, :);
 
   #EXAMPLE POINTS because ginput not working
-  first_x = [1321.1   1217.8   1284.2   1298.9   1236.3   1387.4   1092.5   1346.9];
-  first_y = [450.51   454.20   520.56   561.11   561.11   785.99   785.99   325.16];
-  second_x = [871.28   764.37   801.24   838.10   782.80   963.45   716.44   922.90];
-  second_y = [443.14   443.14   516.87   557.42   550.05   785.99   763.87   310.42];
+  ##first_x = [1321.1   1217.8   1284.2   1298.9   1236.3   1387.4   1092.5   1346.9];
+  #first_y = [450.51   454.20   520.56   561.11   561.11   785.99   785.99   325.16];
+  #second_x = [871.28   764.37   801.24   838.10   782.80   963.45   716.44   922.90];
+  #second_y = [443.14   443.14   516.87   557.42   550.05   785.99   763.87   310.42];
   
   
   # -----------normalizing image points----------------
@@ -80,18 +68,36 @@ function ass4 ()
   geometric_error = geom_dist(f, first_x, first_y, second_x, second_y)
   
   #---- draw epipolar lines-------
+
   a = imread("image_1.jpg");
-  #b = imread("image_2.jpg");
-  figure, imshow(a), hold on  
+  figure, imshow(a), hold on 
   for point_number = 1:8
     point = [first_x(point_number), first_y(point_number), 1];
     corr_point = [second_x(point_number), second_y(point_number), 1];
     epipolar_line = f * transpose(point);
     epipolar_line_T =  transpose(f) * transpose(corr_point) ;
-    hline(epipolar_line);  
-    hline(epipolar_line_T);  
-  end  
+    hold on;
+    hline(epipolar_line);
+    hold off;
+    hold on;  
+    hline(epipolar_line_T);
+    hold off;  
+  end
   
+  b = imread("image_2.jpg");
+  figure, imshow(b), hold on 
+  for point_number = 1:8
+    point = [first_x(point_number), first_y(point_number), 1];
+    corr_point = [second_x(point_number), second_y(point_number), 1];
+    epipolar_line = f * transpose(point);
+    epipolar_line_T =  transpose(f) * transpose(corr_point);
+    hold on;
+    hline(epipolar_line);  
+    hold off;
+    hold on;
+    hline(epipolar_line_T);  
+    hold off;
+  end
   
 endfunction
 
