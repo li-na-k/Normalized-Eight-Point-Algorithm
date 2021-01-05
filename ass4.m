@@ -67,7 +67,7 @@ function ass4 ()
   t_first = CreateTransformationMatrix(tx_first,ty_first,sx_first,sy_first);
   t_second = CreateTransformationMatrix(tx_second,ty_second,sx_second,sy_second);
   
-  f = t_second' * f;
+  f = transpose(t_second) * f;
   f = f * t_first;
  
   # --------- Enforcing the internal constraint ----------------
@@ -86,8 +86,8 @@ function sum = geom_dist(f, first_x, first_y, second_x, second_y)
   for point_number = 1:8
     point = [first_x(point_number), first_y(point_number), 1];
     corr_point = [second_x(point_number), second_y(point_number), 1];
-    epipolar_line = point * f;
-    epipolar_line_T = corr_point * transpose(f);
+    epipolar_line = f * transpose(point);
+    epipolar_line_T =  transpose(f) * transpose(corr_point) ;
     gd = dist(epipolar_line, corr_point)^2 + dist(epipolar_line_T,point)^2
     sum = sum + gd;
   end
