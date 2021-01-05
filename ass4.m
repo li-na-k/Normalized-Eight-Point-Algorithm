@@ -79,6 +79,20 @@ function ass4 ()
   #------ geometric_error ----------
   geometric_error = geom_dist(f, first_x, first_y, second_x, second_y)
   
+  #---- draw epipolar lines-------
+  a = imread("image_1.jpg");
+  #b = imread("image_2.jpg");
+  figure, imshow(a), hold on  
+  for point_number = 1:8
+    point = [first_x(point_number), first_y(point_number), 1];
+    corr_point = [second_x(point_number), second_y(point_number), 1];
+    epipolar_line = f * transpose(point);
+    epipolar_line_T =  transpose(f) * transpose(corr_point) ;
+    hline(epipolar_line);  
+    hline(epipolar_line_T);  
+  end  
+  
+  
 endfunction
 
 function sum = geom_dist(f, first_x, first_y, second_x, second_y)
