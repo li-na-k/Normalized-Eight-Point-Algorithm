@@ -1,21 +1,21 @@
 function ass4 ()
-  a = imread("image_1.jpg");
-  b = imread("image_2.jpg");
-  imshow(a);
-  first = get_points;
-  imshow(b);
-  second = get_points;
-
-  first_x = first(1, :);
-  first_y = first(2, :);
-  second_x = second(1, :);
-  second_y = second(2, :);
+##  a = imread("image_1.jpg");
+##  b = imread("image_2.jpg");
+##  imshow(a);
+##  first = get_points;
+##  imshow(b);
+##  second = get_points;
+##
+##  first_x = first(1, :);
+##  first_y = first(2, :);
+##  second_x = second(1, :);
+##  second_y = second(2, :);
 
   #EXAMPLE POINTS because ginput not working
-  ##first_x = [1321.1   1217.8   1284.2   1298.9   1236.3   1387.4   1092.5   1346.9];
-  #first_y = [450.51   454.20   520.56   561.11   561.11   785.99   785.99   325.16];
-  #second_x = [871.28   764.37   801.24   838.10   782.80   963.45   716.44   922.90];
-  #second_y = [443.14   443.14   516.87   557.42   550.05   785.99   763.87   310.42];
+  first_x = [1321.1   1217.8   1284.2   1298.9   1236.3   1387.4   1092.5   1346.9];
+  first_y = [450.51   454.20   520.56   561.11   561.11   785.99   785.99   325.16];
+  second_x = [871.28   764.37   801.24   838.10   782.80   963.45   716.44   922.90];
+  second_y = [443.14   443.14   516.87   557.42   550.05   785.99   763.87   310.42];
   
   
   # -----------normalizing image points----------------
@@ -55,15 +55,18 @@ function ass4 ()
   t_first = CreateTransformationMatrix(tx_first,ty_first,sx_first,sy_first);
   t_second = CreateTransformationMatrix(tx_second,ty_second,sx_second,sy_second);
   
-  f = transpose(t_second) * f;
-  f = f * t_first;
  
   # --------- Enforcing the internal constraint ----------------
   [u,s,v] = svd(f);
   s(3,3) = 0;
-  # f = u * s * v
-  f2 = u * s * v
-  d = det(f2)
+    
+  f = u * s * transpose(v);
+  
+  f = transpose(t_second) * f;
+  f = f * t_first;
+  
+##  f2 = u * s * v
+  d = det(f)
   
   #------ geometric_error ----------
   geometric_error = geom_dist(f, first_x, first_y, second_x, second_y)
@@ -75,10 +78,8 @@ function ass4 ()
   for point_number = 1:8
     point = [first_x(point_number), first_y(point_number), 1];
     corr_point = [second_x(point_number), second_y(point_number), 1];
-    epipolar_line = f * transpose(point);
-    epipolar_line_T =  transpose(f) * transpose(corr_point) ;
-    hline(epipolar_line); 
-    #hline(epipolar_line_T); 
+    epipolar_line_T =  transpose(f) * transpose(corr_point);
+    hline(epipolar_line_T); 
   end
   
   b = imread("image_2.jpg");
@@ -87,9 +88,7 @@ function ass4 ()
     point = [first_x(point_number), first_y(point_number), 1];
     corr_point = [second_x(point_number), second_y(point_number), 1];
     epipolar_line = f * transpose(point);
-    epipolar_line_T =  transpose(f) * transpose(corr_point);
-    hline(epipolar_line);  
-    #hline(epipolar_line_T);  
+    hline(epipolar_line);
   end
   
 endfunction
@@ -101,7 +100,7 @@ function sum = geom_dist(f, first_x, first_y, second_x, second_y)
     corr_point = [second_x(point_number), second_y(point_number), 1];
     epipolar_line = f * transpose(point);
     epipolar_line_T =  transpose(f) * transpose(corr_point) ;
-    gd = dist(epipolar_line, corr_point)^2 + dist(epipolar_line_T,point)^2
+    gd = dist(epipolar_line, corr_point)^2 + dist(epipolar_line_T,point)^2;
     sum = sum + gd;
   end
 endfunction
