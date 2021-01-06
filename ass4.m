@@ -1,21 +1,21 @@
 function ass4 ()
-##  a = imread("image_1.jpg");
-##  b = imread("image_2.jpg");
-##  imshow(a);
-##  first = get_points;
-##  imshow(b);
-##  second = get_points;
-##
-##  first_x = first(1, :);
-##  first_y = first(2, :);
-##  second_x = second(1, :);
-##  second_y = second(2, :);
+  a = imread("image_1.jpg");
+  b = imread("image_2.jpg");
+  imshow(a);
+  first = get_points;
+  imshow(b);
+  second = get_points;
+
+  first_x = first(1, :);
+  first_y = first(2, :);
+  second_x = second(1, :);
+  second_y = second(2, :);
 
   #EXAMPLE POINTS because ginput not working
-  first_x = [1321.1   1217.8   1284.2   1298.9   1236.3   1387.4   1092.5   1346.9];
-  first_y = [450.51   454.20   520.56   561.11   561.11   785.99   785.99   325.16];
-  second_x = [871.28   764.37   801.24   838.10   782.80   963.45   716.44   922.90];
-  second_y = [443.14   443.14   516.87   557.42   550.05   785.99   763.87   310.42];
+  #first_x = [1321.1   1217.8   1284.2   1298.9   1236.3   1387.4   1092.5   1346.9];
+  #first_y = [450.51   454.20   520.56   561.11   561.11   785.99   785.99   325.16];
+  #second_x = [871.28   764.37   801.24   838.10   782.80   963.45   716.44   922.90];
+  #second_y = [443.14   443.14   516.87   557.42   550.05   785.99   763.87   310.42];
   
   
   # -----------normalizing image points----------------
@@ -65,7 +65,6 @@ function ass4 ()
   f = transpose(t_second) * f;
   f = f * t_first;
   
-##  f2 = u * s * v
   d = det(f)
   
   #------ geometric_error ----------
